@@ -127,7 +127,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AirportManager.cpp" />
     <ClCompile Include="Data_Structure_FinalProject_1.cpp" />
+    <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Runway.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AirportManager.h" />
+    <ClInclude Include="Plane.h" />
+    <ClInclude Include="Runway.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
