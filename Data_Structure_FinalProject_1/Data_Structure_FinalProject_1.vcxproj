@@ -136,6 +136,7 @@
     <ClInclude Include="AirportManager.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Runway.h" />
+    <ClInclude Include="Setting.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
