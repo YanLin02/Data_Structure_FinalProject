@@ -8,7 +8,8 @@ using std::pair;
 
 enum Plane_states	//飞机状态
 {
-	arriving,		//准备降落
+	null,			//无状态
+	landing,		//准备降落
 	departing		//准备起飞
 };
 
@@ -16,6 +17,7 @@ class Plane
 {
 	friend ostream& operator<< (ostream& out, const Plane& p);				//打印飞机信息
 public:
+	Plane();																//默认构造（队列用）
 	Plane(int id, int t);													//传入飞机编号与剩余时间构造
 	Plane(int id, Plane_states state);
 

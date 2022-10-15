@@ -1,20 +1,26 @@
 #pragma once
-#include <queue>
+#include "myQueue.h"
 #include "Plane.h"
 #include "Setting.h"
-using std::queue;
 
+//class AirportManager;
 class Runway
 {
+	//friend class AirportManager;
 public:
-	Runway();
 
+	//Runway();
 
+	u_int getLandingNum()const { return q_landing.size(); }
+	u_int getDepartingNum()const { return q_departing.size(); }
+
+	void addLandingPlane(const Plane& p) { q_landing.push(p); }
+	void addArrivingPlane(const Plane& p) { q_departing.push(p); }
 
 
 private:
-	queue<Plane> q_landing_1;
-	queue<Plane> q_takeoff;
+	myQueue<Plane> q_landing;
+	myQueue<Plane> q_departing;
 
 
 };

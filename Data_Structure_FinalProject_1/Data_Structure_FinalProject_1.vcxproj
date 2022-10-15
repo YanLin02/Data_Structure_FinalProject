@@ -134,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirportManager.h" />
+    <ClInclude Include="myQueue.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Runway.h" />
     <ClInclude Include="Setting.h" />
