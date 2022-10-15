@@ -39,17 +39,17 @@ void Plane::refresh()
 	this->m_waitingTime++;
 }
 
-inline void Plane::emergencyLanding(ostream& out)
+void Plane::emergencyLanding(ostream& out)const
 {
 	out << this->m_id << "号飞机紧急降落！\n";
 }
 
-inline void Plane::land(ostream& out)
+void Plane::land(ostream& out)const
 {
 	out << this->m_id << "号飞机降落，剩余油量为：" << this->m_timeRemaining << " 等待时间为：" << this->m_waitingTime << endl;
 }
 
-inline void Plane::depart(ostream& out)
+void Plane::depart(ostream& out)const
 {
 	out << this->m_id << "号飞机起飞，等待时间为：" << this->m_waitingTime << endl;
 }

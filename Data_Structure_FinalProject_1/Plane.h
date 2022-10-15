@@ -15,6 +15,7 @@ enum Plane_states	//飞机状态
 
 class Plane
 {
+	friend class AirportManager;
 	friend ostream& operator<< (ostream& out, const Plane& p);				//打印飞机信息
 public:
 	Plane();																//默认构造（队列用）
@@ -25,9 +26,9 @@ public:
 
 	bool check() const { return this->m_timeRemaining == EMERGENCY_TIME; }	//飞机警报
 
-	void emergencyLanding(ostream& out);
-	void land(ostream& out);
-	void depart(ostream& out);
+	void emergencyLanding(ostream& out)const;
+	void land(ostream& out)const;
+	void depart(ostream& out)const;
 
 	int getTimeRemaining()const { return this->m_timeRemaining; }
 

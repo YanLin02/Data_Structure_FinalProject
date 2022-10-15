@@ -1,9 +1,9 @@
 #include "AirportManager.h"
 
 AirportManager::AirportManager()
-	:sum_landing_number(0), sum_landing_time(0), sum_landing_add(0),
-	sum_departing_number(0), sum_departing_time(0), sum_departing_add(0),
-	sum_emergency_landing(0),
+	:sum_landing_number(0), sum_landing_wait(0), sum_landing_add(0),
+	sum_departing_number(0), sum_departing_wait(0), sum_departing_add(0),
+	sum_emergency_landing(0), sum_landing_Remaining(0),
 	way_1(1), way_2(2), way_3(3)
 {
 	srand(time(NULL));
@@ -70,15 +70,61 @@ void AirportManager::nextTurn(ostream& out)
 	switch (this->checkEmergencyLanding(out))
 	{
 	case 0://三条跑道均可使用
+		if (way_1.modSwitch() == landing)
+			landLog(way_1.landPlane(), out);
+		else if (way_1.modSwitch() == departing)
+			departLog(way_1.departPlane(), out);
+
+		if (way_2.modSwitch() == landing)
+			landLog(way_2.landPlane(), out);
+		else if (way_2.modSwitch() == departing)
+			departLog(way_2.departPlane(), out);
+
+		if (way_3.modSwitch() != null)
+			departLog(way_2.departPlane(), out);
 		break;
+
 	case 1://第三条用于迫降，其他正常
+		if (way_1.modSwitch() == landing)
+			landLog(way_1.landPlane(), out);
+		else if (way_1.modSwitch() == departing)
+			departLog(way_1.departPlane(), out);
+
+		if (way_2.modSwitch() == landing)
+			landLog(way_2.landPlane(), out);
+		else if (way_2.modSwitch() == departing)
+			departLog(way_2.departPlane(), out);
 		break;
+
 	case 2://第三条和12中任务较小的迫降
+		if (way_1.getTaskNum() <= way_2.getTaskNum())
+		{
+			if (way_1.modSwitch() == landing)
+				landLog(way_1.landPlane(), out);
+			else if (way_1.modSwitch() == departing)
+				departLog(way_1.departPlane(), out);
+		}
+		else
+		{
+			if (way_2.modSwitch() == landing)
+				landLog(way_2.landPlane(), out);
+			else if (way_2.modSwitch() == departing)
+				departLog(way_2.departPlane(), out);
+		}
 		break;
+
 	case 3://全部迫降
 		break;
 	}
+	//刷新每架飞机
+	way_1.refreshAll();
+	way_2.refreshAll();
+	way_3.refreshAll();
+}
 
+void AirportManager::showShowWay(ostream& out)
+{
+	out << way_1 << way_2 << way_3 << endl;
 }
 
 int AirportManager::checkEmergencyLanding(ostream& out)
@@ -90,6 +136,7 @@ int AirportManager::checkEmergencyLanding(ostream& out)
 		{
 			emergencyLanding++;
 			sum_emergency_landing++;
+			sum_landing_number++;
 			way_1.q_landing[i].emergencyLanding(out);
 			way_1.q_landing.Delete(i);
 		}
@@ -100,6 +147,7 @@ int AirportManager::checkEmergencyLanding(ostream& out)
 		{
 			emergencyLanding++;
 			sum_emergency_landing++;
+			sum_landing_number++;
 			way_2.q_landing[i].emergencyLanding(out);
 			way_2.q_landing.Delete(i);
 		}

@@ -15,23 +15,33 @@ public:
 
 	u_int getLandingNum()const { return q_landing.getLength(); }
 	u_int getDepartingNum()const { return q_departing.getLength(); }
+	u_int getTaskNum() const { return getDepartingNum() + getLandingNum(); }	//返回任务量
 
 	void addLandingPlane(const Plane& p) { q_landing.push_back(p); }
 	void addDepartingPlane(const Plane& p) { q_departing.push_back(p); }
 
-	void use(ostream& out);
+	Plane landPlane() { return this->q_landing.pop_front(); }
+	Plane departPlane() { return this->q_departing.pop_front(); }
 
+	//double averageLandingWait() {												//返回预计降落等待平均时间
+	//	double sum = 0;
+	//	for (size_t i = 0; i < q_landing.getLength(); i++)
+	//		sum += q_landing[i].getTimeRemaining();
+	//	return sum / q_landing.getLength();
+	//}
 
-	double averageLandingWait() {												//返回预计降落等待平均时间
-		double sum = 0;
-		for (size_t i = 0; i < q_landing.getLength(); i++)
-			sum += q_landing[i].getTimeRemaining();
-		return sum / q_landing.getLength();
+	Plane_states modSwitch() {													//判断任务优先级
+		if (q_departing.isEmpty() && q_landing.isEmpty())
+			return null;
+		return (getLandingNum() >= getDepartingNum() ? landing : departing);
 	}
 
-private:
-	Plane_states modSwitch() {													//判断任务优先级
-		return (q_landing.getLength() >= q_departing.getLength() ? landing : departing);
+
+	void refreshAll() {
+		for (size_t i = 0; i < getLandingNum(); i++)
+			q_landing[i].refresh();
+		for (size_t i = 0; i < getDepartingNum(); i++)
+			q_departing[i].refresh();
 	}
 
 private:
@@ -54,12 +64,4 @@ ostream& operator<<(ostream& out, const Runway& way)
 	out << "===============================================\n";
 
 	return out;
-}
-
-void Runway::use(ostream& out)
-{
-	if (modSwitch() == landing)
-	{
-		out << q_landing[0]
-	}
 }

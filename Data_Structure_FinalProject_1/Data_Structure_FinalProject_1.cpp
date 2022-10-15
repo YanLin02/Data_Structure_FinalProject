@@ -38,15 +38,15 @@
 * 每个周期对每架飞机刷新
 */
 #include <iostream>
-
+#include"AirportManager.h"
 using namespace std;
 
 int main()
 {
-	//bool a[4] = { true };
-	//for (size_t i = 0; i < 4; i++)
-	//{
-	//	cout << a[i] << endl;
-	//}
+	AirportManager am;
+	
+
+
+
 	return 0;
 }
