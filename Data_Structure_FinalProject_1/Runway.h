@@ -17,7 +17,10 @@ public:
 	u_int getDepartingNum()const { return q_departing.getLength(); }
 
 	void addLandingPlane(const Plane& p) { q_landing.push_back(p); }
-	void addArrivingPlane(const Plane& p) { q_departing.push_back(p); }
+	void addDepartingPlane(const Plane& p) { q_departing.push_back(p); }
+
+	void use(ostream& out);
+
 
 	double averageLandingWait() {												//返回预计降落等待平均时间
 		double sum = 0;
@@ -26,6 +29,7 @@ public:
 		return sum / q_landing.getLength();
 	}
 
+private:
 	Plane_states modSwitch() {													//判断任务优先级
 		return (q_landing.getLength() >= q_departing.getLength() ? landing : departing);
 	}
@@ -50,4 +54,12 @@ ostream& operator<<(ostream& out, const Runway& way)
 	out << "===============================================\n";
 
 	return out;
+}
+
+void Runway::use(ostream& out)
+{
+	if (modSwitch() == landing)
+	{
+		out << q_landing[0]
+	}
 }

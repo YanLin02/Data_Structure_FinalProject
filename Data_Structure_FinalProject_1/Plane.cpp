@@ -43,3 +43,13 @@ inline void Plane::emergencyLanding(ostream& out)
 {
 	out << this->m_id << "号飞机紧急降落！\n";
 }
+
+inline void Plane::land(ostream& out)
+{
+	out << this->m_id << "号飞机降落，剩余油量为：" << this->m_timeRemaining << " 等待时间为：" << this->m_waitingTime << endl;
+}
+
+inline void Plane::depart(ostream& out)
+{
+	out << this->m_id << "号飞机起飞，等待时间为：" << this->m_waitingTime << endl;
+}
