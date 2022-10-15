@@ -38,9 +38,6 @@
     <ClInclude Include="Setting.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="myQueue.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="mySeqList.h">
       <Filter>头文件</Filter>
     </ClInclude>

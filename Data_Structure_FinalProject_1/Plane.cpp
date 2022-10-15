@@ -2,11 +2,11 @@
 
 ostream& operator<<(ostream& out, const Plane& p)
 {
-	out << "编号为：" << p.m_id << "的飞机";
+	out << " + 编号为：" << p.m_id << " 的飞机";
 	if (p.m_state == landing)
-		out << "尚未降落，已经等待：" << p.m_waitingTime << "单位时间，剩余时间为" << p.m_timeRemaining << endl;
+		out << "尚未降落，已经等待：" << p.m_waitingTime << " 单位时间，剩余油量为：" << p.m_timeRemaining << endl;
 	else
-		out << "等待起飞，已经等待：" << p.m_waitingTime << "单位时间" << endl;
+		out << "等待起飞，已经等待：" << p.m_waitingTime << " 单位时间" << endl;
 	return out;
 }
 
@@ -46,7 +46,7 @@ void Plane::emergencyLanding(ostream& out)const
 
 void Plane::land(ostream& out)const
 {
-	out << this->m_id << "号飞机降落，剩余油量为：" << this->m_timeRemaining << " 等待时间为：" << this->m_waitingTime << endl;
+	out << this->m_id << "号飞机降落，等待时间为：" << this->m_waitingTime << " 剩余油量为：" << this->m_timeRemaining << endl;
 }
 
 void Plane::depart(ostream& out)const

@@ -43,10 +43,11 @@ using namespace std;
 
 int main()
 {
+	ofstream ofs("out.txt");
 	AirportManager am;
-	
-
-
+	am.RandomTest(ofs, 10);
+	//am.inputFromKeyboard();
+	//am.inputFromFile();
 
 	return 0;
 }

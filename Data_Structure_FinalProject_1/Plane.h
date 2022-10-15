@@ -24,7 +24,7 @@ public:
 
 	void refresh();															//刷新飞机时间
 
-	bool check() const { return this->m_timeRemaining == EMERGENCY_TIME; }	//飞机警报
+	bool check() const { return this->m_timeRemaining <= EMERGENCY_TIME; }	//飞机警报
 
 	void emergencyLanding(ostream& out)const;
 	void land(ostream& out)const;

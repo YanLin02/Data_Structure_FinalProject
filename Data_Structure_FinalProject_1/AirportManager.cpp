@@ -9,7 +9,87 @@ AirportManager::AirportManager()
 	srand(time(NULL));
 }
 
-void AirportManager::PlaneAddToLanding(int number)
+void AirportManager::RandomTest(ostream& out, u_int num)
+{
+	for (size_t i = 0; i < num; i++)
+	{
+		out << ">>>>>>>>>>>> 第 " << i + 1 << " 单位时间 <<<<<<<<<<<<\n\n";
+		PlaneAddToLanding(out);
+		PlaneAddToDeparting(out);
+		out << endl;
+		showShowWay(out);
+		nextTurn(out);
+		showLogs(out);
+	}
+}
+
+void AirportManager::inputFromKeyboard()
+{
+	int number = 0, t = 0;
+	int time[3] = { 0,0,0 };
+	cout << ">>>>>>>>>>>> 第 " << t++ + 1 << " 单位时间 <<<<<<<<<<<<\n\n";
+
+	cout << "请输入准备着陆的飞机数（0-3），输入 -1 结束进程：";
+	cin >> number;
+	while ((number >= 0) && (number <= 3))
+	{
+		if (number != 0) cout << "请输入准备着陆的飞机油量\n";
+		for (int i = 0; i < number; i++)
+			cin >> time[i];
+		PlaneAddToLanding(cout, number, time);
+
+		cout << "请输入准备起飞的飞机数（0-3）:";
+		cin >> number;
+		PlaneAddToDeparting(cout, number, 0);
+
+		cout << endl;
+		showShowWay(cout);
+		nextTurn(cout);
+		showLogs(cout);
+
+		cout << ">>>>>>>>>>>> 第 " << t++ + 1 << " 单位时间 <<<<<<<<<<<<\n\n";
+		cout << "请输入准备着陆的飞机数（0-3），输入 -1 结束进程：";
+		cin >> number;
+	}
+}
+
+void AirportManager::inputFromFile(string inputPath, string outputPath)
+{
+	ifstream in(inputPath);
+	ofstream out(outputPath);
+
+	if (!in.is_open())
+	{
+		out << inputPath << "打开失败！";
+		cout << inputPath << "打开失败！";
+		exit(0);
+	}
+
+	int number = 0, t = 0;
+	int time[3] = { 0,0,0 };
+	in >> number;
+	while ((number >= 0) && (number <= 3) && (in.peek() != EOF))
+	{
+		out << ">>>>>>>>>>>> 第 " << t++ + 1 << " 单位时间 <<<<<<<<<<<<\n\n";
+		for (int i = 0; i < number; i++)
+			in >> time[i];
+		PlaneAddToLanding(out, number, time);
+
+		in >> number;
+		PlaneAddToDeparting(out, number, 0);
+
+		out << endl;
+		showShowWay(out);
+		nextTurn(out);
+		showLogs(out);
+
+		in >> number;
+	}
+
+}
+
+
+void AirportManager::PlaneAddToLanding(ostream& out, int number)
 {
 	//若输入非法数据，则随机产生一定数量的飞机
 	if (number < 0 || number > MAX_PLANE_NUM)
@@ -21,9 +101,10 @@ void AirportManager::PlaneAddToLanding(int number)
 		this->getMinQueue(landing).addLandingPlane(Plane(sum_landing_add * 2 + 1, landing));//编号为 2*sum_landing_add+1
 		sum_landing_add++;
 	}
+	out << number << " 架飞机进入降落队列\n";
 }
 
-void AirportManager::PlaneAddToLanding(int number, int times[])
+void AirportManager::PlaneAddToLanding(ostream& out, int number, int times[])
 {
 	//若输入非法数据，则抛出异常
 	if (number < 0 || number > MAX_PLANE_NUM)
@@ -35,9 +116,10 @@ void AirportManager::PlaneAddToLanding(int number, int times[])
 		this->getMinQueue(landing).addLandingPlane(Plane(sum_landing_add * 2 + 1, times[i]));//编号为 2*sum_landing_add+1
 		sum_landing_add++;
 	}
+	out << number << " 架飞机进入降落队列\n";
 }
 
-void AirportManager::PlaneAddToDeparting(int number)
+void AirportManager::PlaneAddToDeparting(ostream& out, int number)
 {
 	//若输入非法数据，则随机产生一定数量的飞机
 	if (number < 0 || number > MAX_PLANE_NUM)
@@ -46,12 +128,13 @@ void AirportManager::PlaneAddToDeparting(int number)
 	for (size_t i = 0; i < number; i++)
 	{
 		//查询最小的起飞队列,将飞机插入队列
-		this->getMinQueue(departing).addLandingPlane(Plane(sum_departing_add * 2, departing));
+		this->getMinQueue(departing).addDepartingPlane(Plane(sum_departing_add * 2, departing));
 		sum_departing_add++;
 	}
+	out << number << " 架飞机进入起飞队列\n";
 }
 
-void AirportManager::PlaneAddToDeparting(int number, int times[])
+void AirportManager::PlaneAddToDeparting(ostream& out, int number, bool temp)
 {
 	//若输入非法数据，则抛出异常
 	if (number < 0 || number > MAX_PLANE_NUM)
@@ -60,9 +143,10 @@ void AirportManager::PlaneAddToDeparting(int number, int times[])
 	for (size_t i = 0; i < number; i++)
 	{
 		//查询最小的起飞队列,将飞机插入队列
-		this->getMinQueue(departing).addLandingPlane(Plane(sum_departing_add * 2, times[i]));
+		this->getMinQueue(departing).addDepartingPlane(Plane(sum_departing_add * 2, departing));
 		sum_departing_add++;
 	}
+	out << number << " 架飞机进入起飞队列\n";
 }
 
 void AirportManager::nextTurn(ostream& out)
@@ -81,7 +165,7 @@ void AirportManager::nextTurn(ostream& out)
 			departLog(way_2.departPlane(), out);
 
 		if (way_3.modSwitch() != null)
-			departLog(way_2.departPlane(), out);
+			departLog(way_3.departPlane(), out);
 		break;
 
 	case 1://第三条用于迫降，其他正常
@@ -127,29 +211,35 @@ void AirportManager::showShowWay(ostream& out)
 	out << way_1 << way_2 << way_3 << endl;
 }
 
+void AirportManager::showLogs(ostream& out)
+{
+	out << "\n##############################################\n";
+	out << "\t起飞的平均等待时间:" << (sum_departing_number == 0 ? 0 : (double(sum_departing_wait) / sum_departing_number)) << endl;
+	out << "\t着陆的平均等待时间:" << (sum_landing_number == 0 ? 0 : (double(sum_landing_wait) / sum_landing_number)) << endl;
+	out << "\t着陆的平均剩余油量:" << (sum_landing_number == 0 ? 0 : (double(sum_landing_Remaining) / sum_landing_number)) << endl;
+	out << "\t紧急降落的飞机数量:" << sum_emergency_landing << endl;
+	out << "##############################################\n\n";
+}
+
 int AirportManager::checkEmergencyLanding(ostream& out)
 {
 	int emergencyLanding = 0;
-	for (size_t i = 0; i < way_1.getLandingNum(); i++)
+	int way_1PlaneNum = way_1.getLandingNum();
+	int way_2PlaneNum = way_2.getLandingNum();
+	for (size_t i = 0; i < way_1PlaneNum; i++)
 	{
-		if (way_1.q_landing[i].check())
+		if (way_1.checkPlane(i))
 		{
 			emergencyLanding++;
-			sum_emergency_landing++;
-			sum_landing_number++;
-			way_1.q_landing[i].emergencyLanding(out);
-			way_1.q_landing.Delete(i);
+			emergencyLog(way_1.emergencyPlane(i), out);
 		}
 	}
-	for (size_t i = 0; i < way_2.getLandingNum(); i++)
+	for (size_t i = 0; i < way_2PlaneNum; i++)
 	{
-		if (way_2.q_landing[i].check())
+		if (way_2.checkPlane(i))
 		{
 			emergencyLanding++;
-			sum_emergency_landing++;
-			sum_landing_number++;
-			way_2.q_landing[i].emergencyLanding(out);
-			way_2.q_landing.Delete(i);
+			emergencyLog(way_2.emergencyPlane(i), out);
 		}
 	}
 	if (emergencyLanding > 3)
@@ -175,3 +265,4 @@ Runway& AirportManager::getMinQueue(Plane_states state)
 		min = (way_1.getLandingNum() <= way_2.getLandingNum() ? &way_1 : &way_2);
 	return *min;
 }
+

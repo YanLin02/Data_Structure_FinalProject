@@ -203,6 +203,8 @@ T mySeqList<T>::Delete(u_int index)
 {
 	if (indexIsWrong(index))
 		throw out_of_range("Index is out of range!");
+	if (isEmpty())
+		throw out_of_range("List is empty!");
 	T temp = this->p_Data[index];
 	this->m_length--;
 	for (size_t i = index; i < m_length; i++)

@@ -2,7 +2,8 @@
 #include "Plane.h"
 #include "Runway.h"
 #include "Setting.h"
-
+#include <fstream>
+#include <string>
 
 class AirportManager
 {
@@ -10,21 +11,29 @@ class AirportManager
 public:
 	AirportManager();
 
-	//private:
+	void RandomTest(ostream& out, u_int num = 1);
 
-	void PlaneAddToLanding(int number = -1);					//插入一定数量的降落飞机(自动分配时间)
-	void PlaneAddToLanding(int number, int times[]);			//插入一定数量的降落飞机(手动分配时间)
+	void inputFromKeyboard();
 
-	void PlaneAddToDeparting(int number = -1);					//插入一定数量的起飞飞机(自动分配时间)
-	void PlaneAddToDeparting(int number, int times[]);			//插入一定数量的起飞飞机(手动分配时间)
+	void inputFromFile(string inputPath = "Input.txt", string outputPath = "Output.txt");
+
+private:
+
+	void PlaneAddToLanding(ostream& out, int number = -1);					//插入一定数量的降落飞机(自动分配时间)
+	void PlaneAddToLanding(ostream& out, int number, int times[]);			//插入一定数量的降落飞机(手动分配时间)
+
+	void PlaneAddToDeparting(ostream& out, int number = -1);				//插入一定数量的起飞飞机(自动分配时间)
+	void PlaneAddToDeparting(ostream& out, int number, bool temp);			//插入一定数量的起飞飞机(手动分配时间)
 
 	void nextTurn(ostream& out);
 
 	void showShowWay(ostream& out);
 
+	void showLogs(ostream& out);
+
 	int checkEmergencyLanding(ostream& out);
 
-	Runway& getMinQueue(Plane_states state);					//根据传入状态返回一个长度最小的跑道
+	Runway& getMinQueue(Plane_states state);								//根据传入状态返回一个长度最小的跑道
 
 	void landLog(const Plane& p, ostream& out) {
 		sum_landing_number++;
@@ -33,7 +42,11 @@ public:
 		p.land(out);
 	}
 
-	//void emergencyLog(const Plane& p, ostream& out);
+	void emergencyLog(const Plane& p, ostream& out) {
+		sum_emergency_landing++;
+		sum_landing_number++;
+		p.emergencyLanding(out);
+	}
 
 	void departLog(const Plane& p, ostream& out) {
 		sum_departing_number++;

@@ -4,11 +4,26 @@
 #include "Plane.h"
 #include "Setting.h"
 
-//class AirportManager;
 class Runway
 {
-	friend class AirportManager;
-	friend ostream& operator<< (ostream& out, const Runway& way);				//打印跑道信息
+	friend ostream& operator<< (ostream& out, const Runway& way) {				//打印跑道信息
+		out << ">>> " << way.m_id << " 号跑道情况：\n";
+
+		out << "降落等待队列：\n";
+		if (way.getLandingNum() == 0)
+			out << " + 空 \n";
+		for (size_t i = 0; i < way.getLandingNum(); i++)
+			out << way.q_landing[i];
+
+		out << "起飞等待队列：\n";
+		if (way.getDepartingNum() == 0)
+			out << " + 空 \n";
+		for (size_t i = 0; i < way.getDepartingNum(); i++)
+			out << way.q_departing[i];
+
+		out << "=======================================================================\n";
+		return out;
+	}
 public:
 
 	Runway(int id) :m_id(id) {}
@@ -22,7 +37,7 @@ public:
 
 	Plane landPlane() { return this->q_landing.pop_front(); }
 	Plane departPlane() { return this->q_departing.pop_front(); }
-
+	Plane emergencyPlane(u_int index) { return q_landing.Delete(index); }
 	//double averageLandingWait() {												//返回预计降落等待平均时间
 	//	double sum = 0;
 	//	for (size_t i = 0; i < q_landing.getLength(); i++)
@@ -44,6 +59,8 @@ public:
 			q_departing[i].refresh();
 	}
 
+	bool checkPlane(u_int index) { return q_landing[index].check(); }
+
 private:
 	int m_id;
 
@@ -51,17 +68,3 @@ private:
 	mySeqList<Plane> q_departing;
 };
 
-ostream& operator<<(ostream& out, const Runway& way)
-{
-	out << ">>> " << way.m_id << " 号跑道情况：\n";
-	out << "降落等待队列：\n";
-	for (size_t i = 0; i < way.getLandingNum(); i++)
-		out << way.q_landing[i];
-	out << "起飞等待队列：\n";
-	for (size_t i = 0; i < way.getDepartingNum(); i++)
-		out << way.q_departing[i];
-
-	out << "===============================================\n";
-
-	return out;
-}
