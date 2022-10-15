@@ -26,9 +26,9 @@ public:
 
 	bool check() const { return this->m_timeRemaining <= EMERGENCY_TIME; }	//·É»ú¾¯±¨
 
-	void emergencyLanding(ostream& out)const;
-	void land(ostream& out)const;
-	void depart(ostream& out)const;
+	void emergencyLanding(ostream& out)const;								//½ô¼±½µÂä
+	void land(ostream& out)const;											//ÆÕÍ¨½µÂä
+	void depart(ostream& out)const;											//Æð·É
 
 	int getTimeRemaining()const { return this->m_timeRemaining; }
 
