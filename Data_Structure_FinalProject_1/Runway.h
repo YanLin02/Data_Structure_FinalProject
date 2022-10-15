@@ -19,11 +19,15 @@ public:
 	void addLandingPlane(const Plane& p) { q_landing.push_back(p); }
 	void addArrivingPlane(const Plane& p) { q_departing.push_back(p); }
 
-	double averageLandingWait() {
+	double averageLandingWait() {												//返回预计降落等待平均时间
 		double sum = 0;
 		for (size_t i = 0; i < q_landing.getLength(); i++)
 			sum += q_landing[i].getTimeRemaining();
 		return sum / q_landing.getLength();
+	}
+
+	Plane_states modSwitch() {													//判断任务优先级
+		return (q_landing.getLength() >= q_departing.getLength() ? landing : departing);
 	}
 
 private:
