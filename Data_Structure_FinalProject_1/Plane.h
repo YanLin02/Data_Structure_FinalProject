@@ -2,9 +2,9 @@
 #include <iostream>
 #include <ctime>
 #include "Setting.h"
-using std::ostream;
-using std::endl;
-using std::pair;
+//using std::ostream;
+//using std::endl;
+//using std::pair;
 
 enum Plane_states	//·É»ú×´Ì¬
 {
@@ -25,6 +25,9 @@ public:
 
 	bool check() const { return this->m_timeRemaining == EMERGENCY_TIME; }	//·É»ú¾¯±¨
 
+	void emergencyLanding(ostream& out);
+
+	int getTimeRemaining()const { return this->m_timeRemaining; }
 
 private:
 	int m_id;																//·É»ú±àºÅ

@@ -24,9 +24,6 @@
     <ClCompile Include="AirportManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Runway.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Plane.h">
@@ -42,6 +39,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="myQueue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mySeqList.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

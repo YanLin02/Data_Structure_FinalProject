@@ -38,3 +38,8 @@ void Plane::refresh()
 		this->m_timeRemaining--;
 	this->m_waitingTime++;
 }
+
+inline void Plane::emergencyLanding(ostream& out)
+{
+	out << this->m_id << "ºÅ·É»ú½ô¼±½µÂä£¡\n";
+}

@@ -1,7 +1,10 @@
 #include "AirportManager.h"
 
 AirportManager::AirportManager()
-	:sum_landing_number(0), sum_landing_time(0), sum_departing_number(0), sum_departing_time(0), sum_departing_add(0), sum_landing_add(0)
+	:sum_landing_number(0), sum_landing_time(0), sum_landing_add(0),
+	sum_departing_number(0), sum_departing_time(0), sum_departing_add(0),
+	sum_emergency_landing(0),
+	way_1(1), way_2(2), way_3(3)
 {
 	srand(time(NULL));
 }
@@ -60,6 +63,53 @@ void AirportManager::PlaneAddToDeparting(int number, int times[])
 		this->getMinQueue(departing).addLandingPlane(Plane(sum_departing_add * 2, times[i]));
 		sum_departing_add++;
 	}
+}
+
+void AirportManager::nextTurn(ostream& out)
+{
+	switch (this->checkEmergencyLanding(out))
+	{
+	case 0://三条跑道均可使用
+		break;
+	case 1://第三条用于迫降，其他正常
+		break;
+	case 2://第三条和12中任务较小的迫降
+		break;
+	case 3://全部迫降
+		break;
+	}
+
+}
+
+int AirportManager::checkEmergencyLanding(ostream& out)
+{
+	int emergencyLanding = 0;
+	for (size_t i = 0; i < way_1.getLandingNum(); i++)
+	{
+		if (way_1.q_landing[i].check())
+		{
+			emergencyLanding++;
+			sum_emergency_landing++;
+			way_1.q_landing[i].emergencyLanding(out);
+			way_1.q_landing.Delete(i);
+		}
+	}
+	for (size_t i = 0; i < way_2.getLandingNum(); i++)
+	{
+		if (way_2.q_landing[i].check())
+		{
+			emergencyLanding++;
+			sum_emergency_landing++;
+			way_2.q_landing[i].emergencyLanding(out);
+			way_2.q_landing.Delete(i);
+		}
+	}
+	if (emergencyLanding > 3)
+	{
+		out << "迫降数量过多，机场无力承载！\n";
+		exit(0);
+	}
+	return emergencyLanding;
 }
 
 Runway& AirportManager::getMinQueue(Plane_states state)
