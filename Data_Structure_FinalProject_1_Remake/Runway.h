@@ -6,6 +6,7 @@
 
 class Runway
 {
+	//打印跑道信息
 	friend ostream& operator<< (ostream& out, const Runway& way) {
 		out << ">>> " << way.m_id << " 号跑道情况：\n";
 
@@ -14,11 +15,11 @@ class Runway
 		if (taknum == 0)
 			out << " + 空 \n";
 		for (size_t i = 0; i < taknum; i++)
-			out << way.l_infoList[i];
+			if (way.l_infoList[i].getState() != null)
+				out << way.l_infoList[i];
 		out << "=======================================================================\n";
 		return out;
 	}
-	//打印跑道信息
 public:
 
 	Runway(int id) :m_id(id) {}

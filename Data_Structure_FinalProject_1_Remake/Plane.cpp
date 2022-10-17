@@ -3,10 +3,17 @@
 ostream& operator<<(ostream& out, const Plane& p)
 {
 	out << " + 编号为：" << p.m_id << " 的飞机";
-	if (p.m_state == landing)
+	switch (p.m_state)
+	{
+	case landing:
 		out << "尚未降落，已经等待：" << p.m_waitingTime << " 单位时间，剩余油量为：" << p.m_timeRemaining << endl;
-	else
+		break;
+	case departing:
 		out << "等待起飞，已经等待：" << p.m_waitingTime << " 单位时间" << endl;
+		break;
+	default:
+		break;
+	}
 	return out;
 }
 
