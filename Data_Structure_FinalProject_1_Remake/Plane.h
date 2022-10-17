@@ -8,7 +8,7 @@
 
 enum Plane_states	//飞机状态
 {
-	null,			//无状态
+	null,			//无状态(已经达成目的)
 	landing,		//准备降落
 	departing		//准备起飞
 };
@@ -25,9 +25,11 @@ public:
 
 	bool check() const { return this->m_timeRemaining <= EMERGENCY_TIME; }	//飞机警报
 
-	void emergencyLanding(ostream& out)const;								//紧急降落
-	void land(ostream& out)const;											//普通降落
-	void depart(ostream& out)const;											//起飞
+	void emergencyLanding(ostream& out);									//紧急降落
+	bool report(ostream& out);												//降落或者起飞时返回true，已经达成目的返回false
+
+	//void depart(ostream& out)const;	//起飞
+	//void land(ostream& out)const;		//普通降落
 
 	int getTimeRemaining()const { return this->m_timeRemaining; }
 

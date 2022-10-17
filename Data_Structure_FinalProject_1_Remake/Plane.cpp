@@ -39,17 +39,36 @@ void Plane::refresh()
 	this->m_waitingTime++;
 }
 
-void Plane::emergencyLanding(ostream& out)const
+void Plane::emergencyLanding(ostream& out)
 {
+	m_state = null;
 	out << this->m_id << "号飞机紧急降落！\n";
 }
 
-void Plane::land(ostream& out)const
-{
-	out << this->m_id << "号飞机降落，等待时间为：" << this->m_waitingTime << " 剩余油量为：" << this->m_timeRemaining << endl;
-}
+//void Plane::land(ostream& out)const
+//{
+//	out << this->m_id << "号飞机降落，等待时间为：" << this->m_waitingTime << " 剩余油量为：" << this->m_timeRemaining << endl;
+//}
+//
+//void Plane::depart(ostream& out)const
+//{
+//	out << this->m_id << "号飞机起飞，等待时间为：" << this->m_waitingTime << endl;
+//}
 
-void Plane::depart(ostream& out)const
+bool Plane::report(ostream& out)
 {
-	out << this->m_id << "号飞机起飞，等待时间为：" << this->m_waitingTime << endl;
+	switch (m_state)
+	{
+	case landing:		//准备着陆
+		m_state = null;
+		out << this->m_id << "号飞机降落，等待时间为：" << this->m_waitingTime << " 剩余油量为：" << this->m_timeRemaining << endl;
+		return true;
+	case departing:		//准备起飞
+		m_state = null;
+		out << this->m_id << "号飞机起飞，等待时间为：" << this->m_waitingTime << endl;
+		return true;
+	case null:
+	default:
+		return false;
+	}
 }
