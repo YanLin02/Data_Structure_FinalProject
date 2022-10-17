@@ -16,7 +16,7 @@ class Plane
 public:
 	Plane();																//默认构造（队列用）
 	Plane(int id, int t);													//传入飞机编号与剩余时间构造
-	Plane(int id, Plane_states state);
+	Plane(int id, Plane_states state);										//传入状态随机生成时间
 
 	void refresh();															//刷新飞机时间
 
