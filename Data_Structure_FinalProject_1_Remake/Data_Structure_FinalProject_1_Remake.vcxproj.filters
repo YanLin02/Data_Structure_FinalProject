@@ -26,5 +26,8 @@
     <ClInclude Include="mySeqList.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Setting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
