@@ -223,31 +223,15 @@ void AirportManager::showLogs(ostream& out)
 
 int AirportManager::checkEmergencyLanding(ostream& out)
 {
-	int emergencyLanding = 0;
-	int way_1PlaneNum = way_1.getLandingNum();
-	int way_2PlaneNum = way_2.getLandingNum();
-	for (size_t i = 0; i < way_1PlaneNum; i++)
-	{
-		if (way_1.checkPlane(i))
-		{
-			emergencyLanding++;
-			emergencyLog(way_1.emergencyPlane(i), out);
-		}
-	}
-	for (size_t i = 0; i < way_2PlaneNum; i++)
-	{
-		if (way_2.checkPlane(i))
-		{
-			emergencyLanding++;
-			emergencyLog(way_2.emergencyPlane(i), out);
-		}
-	}
-	if (emergencyLanding > 3)
+	u_int num = way_1.checkPlane(out) + way_2.checkPlane(out);
+	sum_emergency_landing += num;
+	sum_landing_number += num;
+	if (num > 3)
 	{
 		out << "迫降数量过多，机场无力承载！\n";
 		exit(0);
 	}
-	return emergencyLanding;
+	return num;
 }
 
 Runway& AirportManager::getMinQueue(Plane_states state)
@@ -256,13 +240,13 @@ Runway& AirportManager::getMinQueue(Plane_states state)
 	if (state == departing)	//起飞搜索
 	{
 		min = &way_1;
-		if (min->getDepartingNum() > way_2.getDepartingNum())
+		if (min->getTaskNum() > way_2.getTaskNum())
 			min = &way_2;
-		if (min->getDepartingNum() > way_3.getDepartingNum())
+		if (min->getTaskNum() > way_3.getTaskNum())
 			min = &way_3;
 	}
 	else					//降落搜索
-		min = (way_1.getLandingNum() <= way_2.getLandingNum() ? &way_1 : &way_2);
+		min = (way_1.getTaskNum() <= way_2.getTaskNum() ? &way_1 : &way_2);
 	return *min;
 }
 

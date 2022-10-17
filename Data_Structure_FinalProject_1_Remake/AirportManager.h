@@ -42,11 +42,10 @@ private:
 		p.land(out);
 	}
 
-	void emergencyLog(const Plane& p, ostream& out) {						//记录迫降信息
-		sum_emergency_landing++;
-		sum_landing_number++;
-		p.emergencyLanding(out);
-	}
+	//void emergencyLog(u_int num) {												//记录迫降信息
+	//	sum_emergency_landing += num;
+	//	sum_landing_number += num;
+	//}
 
 	void departLog(const Plane& p, ostream& out) {							//记录起飞信息
 		sum_departing_number++;
