@@ -20,7 +20,9 @@ public:
 
 	void refresh();															//刷新飞机时间
 
-	bool check() const { return this->m_timeRemaining <= EMERGENCY_TIME; }	//飞机警报
+	bool check() const;														//飞机警报
+
+	Plane_states getState()const { return m_state; }						//返回飞机状态
 
 	void emergencyLanding(ostream& out);									//紧急降落
 	bool report(ostream& out);												//降落或者起飞时返回true，已经达成目的返回false

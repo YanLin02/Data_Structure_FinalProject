@@ -40,6 +40,11 @@ void Plane::refresh()
 	this->m_waitingTime++;				//等待时间增加
 }
 
+bool Plane::check()const
+{
+	return (m_state == landing) ? (this->m_timeRemaining <= EMERGENCY_TIME) : false;
+}
+
 void Plane::emergencyLanding(ostream& out)
 {
 	m_state = null;
