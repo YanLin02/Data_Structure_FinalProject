@@ -2,9 +2,6 @@
 #include <iostream>
 #include <ctime>
 #include "Setting.h"
-//using std::ostream;
-//using std::endl;
-//using std::pair;
 
 enum Plane_states	//·É»ú×´Ì¬
 {

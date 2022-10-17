@@ -34,9 +34,10 @@ Plane::Plane(int id, Plane_states state)
 
 void Plane::refresh()
 {
-	if (this->m_state == landing)
+	if (this->m_state == null) return;	//达成目的的飞机不再更新
+	if (this->m_state == landing)		//降落的飞机减少油量
 		this->m_timeRemaining--;
-	this->m_waitingTime++;
+	this->m_waitingTime++;				//等待时间增加
 }
 
 void Plane::emergencyLanding(ostream& out)
