@@ -52,15 +52,13 @@ void AirportManager::inputFromKeyboard()
 	}
 }
 
-void AirportManager::inputFromFile(string inputPath, string outputPath)
+void AirportManager::inputFromFile(ostream& out, string inputPath)
 {
 	ifstream in(inputPath);
-	ofstream out(outputPath);
 
 	if (!in.is_open())
 	{
 		out << inputPath << "打开失败！";
-		cout << inputPath << "打开失败！";
 		exit(0);
 	}
 

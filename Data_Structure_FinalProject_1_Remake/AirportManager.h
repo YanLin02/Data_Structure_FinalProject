@@ -15,7 +15,7 @@ public:
 
 	void inputFromKeyboard();																//键盘输入
 
-	void inputFromFile(string inputPath = "Input.txt", string outputPath = "Output.txt");	//文件输入
+	void inputFromFile(ostream& out, string inputPath = "Input.txt");						//文件输入
 
 private:
 

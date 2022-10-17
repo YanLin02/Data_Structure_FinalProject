@@ -47,9 +47,9 @@ int main()
 {
 	//ofstream ofs("out.txt");
 	AirportManager am;
-	am.RandomTest(cout, 10);
+	//am.RandomTest(cout, 10);
 	//am.inputFromKeyboard();
-	//am.inputFromFile();
+	am.inputFromFile(cout);
 
 	return 0;
 }
