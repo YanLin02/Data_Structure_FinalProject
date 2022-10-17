@@ -18,6 +18,9 @@
     <ClCompile Include="Data_Structure_FinalProject_1_Remake.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="myQueue.h">
@@ -27,6 +30,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Setting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
