@@ -130,6 +130,7 @@
     <ClCompile Include="AirportManager.cpp" />
     <ClCompile Include="Data_Structure_FinalProject_1_Remake.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Runway.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirportManager.h" />

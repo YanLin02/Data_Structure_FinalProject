@@ -24,6 +24,9 @@
     <ClCompile Include="AirportManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Runway.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="myQueue.h">
