@@ -73,11 +73,11 @@ bool Plane::report(ostream& out)
 	switch (m_state)
 	{
 	case landing:		//准备着陆
-		m_state = null;
+		//m_state = null;
 		out << this->m_id << "号飞机降落，等待时间为：" << this->m_waitingTime << " 剩余油量为：" << this->m_timeRemaining << endl;
 		return true;
 	case departing:		//准备起飞
-		m_state = null;
+		//m_state = null;
 		out << this->m_id << "号飞机起飞，等待时间为：" << this->m_waitingTime << endl;
 		return true;
 	case null:

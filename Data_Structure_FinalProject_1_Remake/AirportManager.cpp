@@ -37,7 +37,6 @@ void AirportManager::inputFromKeyboard()
 		for (int i = 0; i < number; i++)
 			cin >> time[i];
 		PlaneAddToLanding(cout, number, time);
-
 		cout << "请输入准备起飞的飞机数（0-3）:";
 		cin >> number;
 		PlaneAddToDeparting(cout, number);

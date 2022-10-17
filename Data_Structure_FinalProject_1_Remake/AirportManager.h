@@ -35,10 +35,21 @@ private:
 	Runway& getMinQueue(Plane_states state);								//根据传入状态返回一个长度最小的跑道
 
 	void takeLog(const Plane& p) {											//记录降落信息
-		sum_landing_number++;
-		sum_landing_wait += p.getWaitingTime();
-		if (p.getState() == landing)
+		switch (p.getState())
+		{
+		case landing:
+			sum_landing_number++;
+			sum_landing_wait += p.getWaitingTime();
 			sum_landing_Remaining += p.getTimeRemaining();
+			break;
+		case departing:
+			sum_departing_number++;
+			sum_departing_wait += p.getWaitingTime();
+			break;
+		case null:
+		default:
+			break;
+		}
 	}
 
 private:
