@@ -37,18 +37,18 @@
 * 飞机到来后加入最短队列
 * 有一个线性表（或链表）与起飞队列对应，存储相应信息，并进行更新
 * 飞机从队列退出时与线性表中的信息同步（或者直接输出线性表中的信息）
-* 
+*
 */
 #include <iostream>
-//#include"AirportManager.h"
+#include"AirportManager.h"
 using namespace std;
 
 int main()
 {
 	//ofstream ofs("out.txt");
-	//AirportManager am;
-	//am.RandomTest(ofs, 10);
-	//am.inputFromKeyboard();
+	AirportManager am;
+	//am.RandomTest(cout, 10);
+	am.inputFromKeyboard();
 	//am.inputFromFile();
 
 	return 0;

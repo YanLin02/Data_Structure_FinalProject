@@ -155,12 +155,12 @@ void AirportManager::nextTurn(ostream& out)
 	{
 	case 0://三条跑道均可使用
 		if (way_1.modSwitch() == landing)
-			landLog(way_1.landPlane(), out);
+			takeLog(way_1.landPlane(), out);
 		else if (way_1.modSwitch() == departing)
 			departLog(way_1.departPlane(), out);
 
 		if (way_2.modSwitch() == landing)
-			landLog(way_2.landPlane(), out);
+			takeLog(way_2.landPlane(), out);
 		else if (way_2.modSwitch() == departing)
 			departLog(way_2.departPlane(), out);
 
@@ -170,12 +170,12 @@ void AirportManager::nextTurn(ostream& out)
 
 	case 1://第三条用于迫降，其他正常
 		if (way_1.modSwitch() == landing)
-			landLog(way_1.landPlane(), out);
+			takeLog(way_1.landPlane(), out);
 		else if (way_1.modSwitch() == departing)
 			departLog(way_1.departPlane(), out);
 
 		if (way_2.modSwitch() == landing)
-			landLog(way_2.landPlane(), out);
+			takeLog(way_2.landPlane(), out);
 		else if (way_2.modSwitch() == departing)
 			departLog(way_2.departPlane(), out);
 		break;
@@ -184,14 +184,14 @@ void AirportManager::nextTurn(ostream& out)
 		if (way_1.getTaskNum() <= way_2.getTaskNum())
 		{
 			if (way_1.modSwitch() == landing)
-				landLog(way_1.landPlane(), out);
+				takeLog(way_1.landPlane(), out);
 			else if (way_1.modSwitch() == departing)
 				departLog(way_1.departPlane(), out);
 		}
 		else
 		{
 			if (way_2.modSwitch() == landing)
-				landLog(way_2.landPlane(), out);
+				takeLog(way_2.landPlane(), out);
 			else if (way_2.modSwitch() == departing)
 				departLog(way_2.departPlane(), out);
 		}

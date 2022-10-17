@@ -15,7 +15,7 @@ void Runway::addPlane(const Plane& p)
 	this->l_infoList.push_back(p);
 }
 
-void Runway::use(ostream& out)
+Plane Runway::use(ostream& out)
 {
 	while (!l_infoList.at(0).report(out))
 	{
@@ -24,8 +24,8 @@ void Runway::use(ostream& out)
 		this->q_waitingQueue.pop();
 	}
 	//汇报成功后把汇报的也除掉
-	this->l_infoList.pop_front();
 	this->q_waitingQueue.pop();
+	return this->l_infoList.pop_front();
 }
 
 void Runway::refreshAll()

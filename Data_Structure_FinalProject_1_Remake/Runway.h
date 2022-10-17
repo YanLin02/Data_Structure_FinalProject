@@ -28,7 +28,7 @@ public:
 
 	void addPlane(const Plane& p);												//添加飞机任务
 
-	void use(ostream& out);														//使用跑道
+	Plane use(ostream& out);														//使用跑道
 
 	void refreshAll(); 															//更新飞机信息
 

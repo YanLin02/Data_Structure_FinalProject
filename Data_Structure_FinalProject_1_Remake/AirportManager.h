@@ -22,8 +22,7 @@ private:
 	void PlaneAddToLanding(ostream& out, int number = -1);					//插入一定数量的降落飞机(自动分配时间)
 	void PlaneAddToLanding(ostream& out, int number, int times[]);			//插入一定数量的降落飞机(手动分配时间)
 
-	void PlaneAddToDeparting(ostream& out, int number = -1);				//插入一定数量的起飞飞机(自动分配时间)
-	void PlaneAddToDeparting(ostream& out, int number, bool temp);			//插入一定数量的起飞飞机(手动分配时间)
+	void PlaneAddToDeparting(ostream& out, int number = -1);				//插入一定数量的起飞飞机
 
 	void nextTurn(ostream& out);											//进入下一时间
 
@@ -35,22 +34,11 @@ private:
 
 	Runway& getMinQueue(Plane_states state);								//根据传入状态返回一个长度最小的跑道
 
-	void landLog(const Plane& p, ostream& out) {							//记录降落信息
+	void takeLog(const Plane& p) {											//记录降落信息
 		sum_landing_number++;
-		sum_landing_wait += p.m_waitingTime;
-		sum_landing_Remaining += p.m_timeRemaining;
-		p.land(out);
-	}
-
-	//void emergencyLog(u_int num) {												//记录迫降信息
-	//	sum_emergency_landing += num;
-	//	sum_landing_number += num;
-	//}
-
-	void departLog(const Plane& p, ostream& out) {							//记录起飞信息
-		sum_departing_number++;
-		sum_departing_wait += p.m_waitingTime;
-		p.depart(out);
+		sum_landing_wait += p.getWaitingTime();
+		if (p.getState() == landing)
+			sum_landing_Remaining += p.getTimeRemaining();
 	}
 
 private:

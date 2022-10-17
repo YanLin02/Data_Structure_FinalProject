@@ -35,7 +35,7 @@ private:
 
 	Runway& getMinQueue(Plane_states state);								//根据传入状态返回一个长度最小的跑道
 
-	void landLog(const Plane& p, ostream& out) {							//记录降落信息
+	void takeLog(const Plane& p, ostream& out) {							//记录降落信息
 		sum_landing_number++;
 		sum_landing_wait += p.m_waitingTime;
 		sum_landing_Remaining += p.m_timeRemaining;

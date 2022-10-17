@@ -40,7 +40,7 @@ void AirportManager::inputFromKeyboard()
 
 		cout << "请输入准备起飞的飞机数（0-3）:";
 		cin >> number;
-		PlaneAddToDeparting(cout, number, 0);
+		PlaneAddToDeparting(cout, number);
 
 		cout << endl;
 		showShowWay(cout);
@@ -76,7 +76,7 @@ void AirportManager::inputFromFile(string inputPath, string outputPath)
 		PlaneAddToLanding(out, number, time);
 
 		in >> number;
-		PlaneAddToDeparting(out, number, 0);
+		PlaneAddToDeparting(out, number);
 
 		out << endl;
 		showShowWay(out);
@@ -98,7 +98,7 @@ void AirportManager::PlaneAddToLanding(ostream& out, int number)
 	for (size_t i = 0; i < number; i++)
 	{
 		//查询最小的降落队列,将飞机插入降落队列
-		this->getMinQueue(landing).addLandingPlane(Plane(sum_landing_add * 2 + 1, landing));//编号为 2*sum_landing_add+1
+		this->getMinQueue(landing).addPlane(Plane(sum_landing_add * 2 + 1, landing));//编号为 2*sum_landing_add+1
 		sum_landing_add++;
 	}
 	out << number << " 架飞机进入降落队列\n";
@@ -113,7 +113,7 @@ void AirportManager::PlaneAddToLanding(ostream& out, int number, int times[])
 	for (size_t i = 0; i < number; i++)
 	{
 		//查询最小的降落队列,将飞机插入降落队列
-		this->getMinQueue(landing).addLandingPlane(Plane(sum_landing_add * 2 + 1, times[i]));//编号为 2*sum_landing_add+1
+		this->getMinQueue(landing).addPlane(Plane(sum_landing_add * 2 + 1, times[i]));//编号为 2*sum_landing_add+1
 		sum_landing_add++;
 	}
 	out << number << " 架飞机进入降落队列\n";
@@ -128,22 +128,7 @@ void AirportManager::PlaneAddToDeparting(ostream& out, int number)
 	for (size_t i = 0; i < number; i++)
 	{
 		//查询最小的起飞队列,将飞机插入队列
-		this->getMinQueue(departing).addDepartingPlane(Plane(sum_departing_add * 2, departing));
-		sum_departing_add++;
-	}
-	out << number << " 架飞机进入起飞队列\n";
-}
-
-void AirportManager::PlaneAddToDeparting(ostream& out, int number, bool temp)
-{
-	//若输入非法数据，则抛出异常
-	if (number < 0 || number > MAX_PLANE_NUM)
-		throw invalid_argument("非法参数：飞机数量输入错误!");
-	/*循环number次*/
-	for (size_t i = 0; i < number; i++)
-	{
-		//查询最小的起飞队列,将飞机插入队列
-		this->getMinQueue(departing).addDepartingPlane(Plane(sum_departing_add * 2, departing));
+		this->getMinQueue(departing).addPlane(Plane(sum_departing_add * 2, departing));
 		sum_departing_add++;
 	}
 	out << number << " 架飞机进入起飞队列\n";
@@ -154,47 +139,30 @@ void AirportManager::nextTurn(ostream& out)
 	switch (this->checkEmergencyLanding(out))
 	{
 	case 0://三条跑道均可使用
-		if (way_1.modSwitch() == landing)
-			landLog(way_1.landPlane(), out);
-		else if (way_1.modSwitch() == departing)
-			departLog(way_1.departPlane(), out);
-
-		if (way_2.modSwitch() == landing)
-			landLog(way_2.landPlane(), out);
-		else if (way_2.modSwitch() == departing)
-			departLog(way_2.departPlane(), out);
-
-		if (way_3.modSwitch() != null)
-			departLog(way_3.departPlane(), out);
+		if (way_1.getTaskNum() != 0)
+			takeLog(way_1.use(out));
+		if (way_2.getTaskNum() != 0)
+			takeLog(way_2.use(out));
+		if (way_3.getTaskNum() != 0)
+			takeLog(way_3.use(out));
 		break;
 
 	case 1://第三条用于迫降，其他正常
-		if (way_1.modSwitch() == landing)
-			landLog(way_1.landPlane(), out);
-		else if (way_1.modSwitch() == departing)
-			departLog(way_1.departPlane(), out);
-
-		if (way_2.modSwitch() == landing)
-			landLog(way_2.landPlane(), out);
-		else if (way_2.modSwitch() == departing)
-			departLog(way_2.departPlane(), out);
+		if (way_1.getTaskNum() != 0)
+			takeLog(way_1.use(out));
+		if (way_2.getTaskNum() != 0)
+			takeLog(way_2.use(out));
 		break;
 
 	case 2://第三条和12中任务较小的迫降
 		if (way_1.getTaskNum() <= way_2.getTaskNum())
 		{
-			if (way_1.modSwitch() == landing)
-				landLog(way_1.landPlane(), out);
-			else if (way_1.modSwitch() == departing)
-				departLog(way_1.departPlane(), out);
+			if (way_1.getTaskNum() != 0)
+				takeLog(way_1.use(out));
 		}
 		else
-		{
-			if (way_2.modSwitch() == landing)
-				landLog(way_2.landPlane(), out);
-			else if (way_2.modSwitch() == departing)
-				departLog(way_2.departPlane(), out);
-		}
+			if (way_2.getTaskNum() != 0)
+				takeLog(way_2.use(out));
 		break;
 
 	case 3://全部迫降

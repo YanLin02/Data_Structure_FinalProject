@@ -23,14 +23,14 @@ public:
 	bool check() const;														//飞机警报
 
 	Plane_states getState()const { return m_state; }						//返回飞机状态
+	int getWaitingTime()const { return m_waitingTime; }
+	int getTimeRemaining()const { return m_timeRemaining; }
 
 	void emergencyLanding(ostream& out);									//紧急降落
 	bool report(ostream& out);												//降落或者起飞时返回true，已经达成目的返回false
 
 	//void depart(ostream& out)const;	//起飞
 	//void land(ostream& out)const;		//普通降落
-
-	int getTimeRemaining()const { return this->m_timeRemaining; }
 
 private:
 	int m_id;																//飞机编号
